@@ -25,8 +25,29 @@ class Form extends Component {
     },
   };
 
+  inputRef = React.createRef();
+  textareaRef = React.createRef();
+  selectRef = React.createRef();
+
+ componentWillMount() {
+    console.log('cwm', this.inputRef);
+  }
+
+  componentDidMount() {
+    console.log("cdm", this.inputRef);
+  } 
+
+  handleChange = () => {
+    this.setState({
+      inputText: this.inputRef.current.value,
+      textareaText: this.textareaRef.current.value,
+      selectText: this.selectRef.current.value,
+    });
+  }
+
   handleInputChange = ({ target: { value } }) => {
-    this.setState({ inputText: value });
+    console.log(this.inputRef);
+     this.setState({ inputText: value });
   };
 
   handleTextareaChange = ({ target: { value } }) => {
@@ -52,6 +73,8 @@ class Form extends Component {
     });
   };
 
+  getRef = (node) => this.el = node;
+
   render() {
     const { inputText, textareaText, selectText, showData } = this.state;
     const { name, text, position } = showData;
@@ -60,7 +83,7 @@ class Form extends Component {
         <form>
           <label>
             Name{" "}
-            <input
+            <input ref={this.inputRef}
               type="text"
               name="name"
               value={inputText}
@@ -69,13 +92,13 @@ class Form extends Component {
           </label>
           <br />
           <label htmlFor="text">Text</label>
-          <textarea
+          <textarea ref={this.textareaRef}
             id="text"
             value={textareaText}
             onChange={this.handleTextareaChange}
           ></textarea>
           <br />
-             <select value={selectText} onChange={this.handleSelectChange}>
+             <select  ref={this.selectRef} value={selectText} onChange={this.handleSelectChange}>
                 {Position.map(({id, value, title}) => {
                    return (
                      <option key={id} value={value}>
