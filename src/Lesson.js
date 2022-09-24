@@ -21,4 +21,4 @@ class Lesson extends Component {
    }
 }
 
-export default Lesson;
+// export default Lesson;
